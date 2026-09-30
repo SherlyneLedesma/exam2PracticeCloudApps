@@ -9,8 +9,8 @@ Create a **Single Page Application(SPA)** using *HTML/JavaScript/BootStrap CSS* 
 
 | HTTP Method | Endpoint | Description | Payload Body (JSON) |
 | ----------- | -------- | ----------- | ------------------- |
-| GET | /api/users | **R**etrieve all users | None |
-| POST | /api/users | **C**reate new user | "{ ""username"", ""lastname"", ""firstname"", ""passwd"", ""email"", ""urole"" }" | 
+| GET | /api/users | Retrieve all users | None |
+| POST | /api/users | Create new user | "{ ""username"", ""lastname"", ""firstname"", ""passwd"", ""email"", ""urole"" }" | 
 
 #### Create MySQL Database
 ```
