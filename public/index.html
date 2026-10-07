@@ -41,6 +41,17 @@
             </table>
         </div>
 
+        <!-- Inside public/index.html - Place this directly above your Add User form -->
+<div class="form-box" style="margin-bottom: 20px;">
+    <h5 class="form-title">Search User by ID</h5>
+    <div class="form-group" style="display: flex; gap: 8px; margin-bottom: 0;">
+        <input type="number" class="form-input" id="searchIdInput" placeholder="Enter User ID (e.g. 1)" style="flex: 1;">
+        <button id="searchBtn" class="btn-refresh" style="background-color: #6c757d; border-color: #6c757d;">Search</button>
+    </div>
+    <div id="searchResultPlaceholder" style="margin-top: 12px; font-size: 0.85rem;"></div>
+</div>
+
+
         <!-- Lower Section: Add User Form (Moved underneath table view) -->
         <div class="row">
             <div class="col-md-6 col-lg-4">

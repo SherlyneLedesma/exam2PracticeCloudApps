@@ -93,5 +93,55 @@ document.addEventListener('DOMContentLoaded', () => {
         return String(val).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
     }
 
+    // Append this lookup engine script logic to the bottom of public/users.js
+
+const searchBtn = document.getElementById('searchBtn');
+const searchIdInput = document.getElementById('searchIdInput');
+const searchResultPlaceholder = document.getElementById('searchResultPlaceholder');
+
+searchBtn.addEventListener('click', async () => {
+    const id = searchIdInput.value.trim();
+    
+    // Clear previous search text output
+    searchResultPlaceholder.innerHTML = '';
+
+    if (!id) {
+        searchResultPlaceholder.innerHTML = `<span class="text-danger" style="color: #dc3545;">Please input a valid numeric ID.</span>`;
+        return;
+    }
+
+    try {
+        // Query the target GET endpoint by attaching the ID directly to the request URL path
+        const response = await fetch(`/api/users/${id}`);
+        const result = await response.json();
+
+        if (response.status === 404) {
+            searchResultPlaceholder.innerHTML = `<span style="color: #dc3545;">User ID ${id} not found in database rows.</span>`;
+            return;
+        }
+
+        if (!response.ok || !result.success) {
+            throw new Error(result.error || 'Server error targeting lookup profile data.');
+        }
+
+        // Output matching user record if found successfully
+        const user = result.data;
+        searchResultPlaceholder.innerHTML = `
+            <div style="border-left: 3px solid #0d6efd; padding-left: 10px; background-color: #f8f9fa; padding-top: 8px; padding-bottom: 8px; border-radius: 0 4px 4px 0;">
+                <strong>Match Found:</strong> ${escapeText(user.firstname)} ${escapeText(user.lastname)}<br>
+                <small style="color: #6c757d;">
+                    Username: <code>${escapeText(user.username)}</code><br>
+                    Email: ${escapeText(user.email)}
+                </small>
+            </div>
+        `;
+
+    } catch (err) {
+        console.error(err);
+        searchResultPlaceholder.innerHTML = `<span style="color: #dc3545;">Error attempting to connect to API lookup server.</span>`;
+    }
+});
+
+
     loadUsers();
 });
